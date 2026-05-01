@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     const fetchDashboardStats = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/expenses/dashboard/stats');
+            const response = await api.get('/api/expenses/dashboard/stats');
             setStats(response.data);
         } catch (err) {
             setError('Failed to fetch dashboard data');
@@ -23,9 +23,9 @@ const Dashboard = () => {
     };
 
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'INR'
         }).format(amount);
     };
 
@@ -70,7 +70,7 @@ const Dashboard = () => {
                     <div className="stat-icon">📈</div>
                     <div className="stat-content">
                         <h3>Average/Transaction</h3>
-                        <p className="stat-value">{formatCurrency(stats.averageExpense)}</p>
+                        <p className="stat-value">{formatCurrency(stats.averageExpense || 0)}</p>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@ const Dashboard = () => {
                 <div className="chart-card">
                     <h3 className="chart-title">Monthly Spending</h3>
                     <div className="monthly-breakdown">
-                        {Object.entries(stats.monthlyExpenses || {}).map(([month, amount]) => (
+                        {Object.entries(stats.monthlyData || {}).map(([month, amount]) => (
                             <div key={month} className="monthly-item mb-3">
                                 <div className="flex justify-between mb-1">
                                     <span>{month}</span>
@@ -118,7 +118,7 @@ const Dashboard = () => {
                                     <div 
                                         className="progress-fill"
                                         style={{
-                                            width: `${(amount / Math.max(...Object.values(stats.monthlyExpenses || {0: 0})) * 100)}%`,
+                                            width: `${(amount / Math.max(...Object.values(stats.monthlyData || {0: 0})) * 100)}%`,
                                             backgroundColor: '#007bff'
                                         }}
                                     ></div>

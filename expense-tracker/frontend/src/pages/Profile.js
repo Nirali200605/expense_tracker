@@ -19,7 +19,7 @@ const Profile = () => {
 
     const fetchUserData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/auth/profile');
+            const response = await api.get('/api/auth/profile');
             setUserData(response.data);
         } catch (err) {
             setError('Failed to fetch profile data');
@@ -30,7 +30,7 @@ const Profile = () => {
 
     const fetchUserStats = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/expenses/dashboard/stats');
+            const response = await api.get('/api/expenses/dashboard/stats');
             setStats(response.data);
         } catch (err) {
             console.error('Failed to fetch user stats');
@@ -77,9 +77,9 @@ const Profile = () => {
                     <div className="info-item">
                         <span className="info-label">Total Spent:</span>
                         <span className="info-value">
-                            {new Intl.NumberFormat('en-US', {
+                            {new Intl.NumberFormat('en-IN', {
                                 style: 'currency',
-                                currency: 'USD'
+                                currency: 'INR'
                             }).format(stats?.totalExpenses || 0)}
                         </span>
                     </div>

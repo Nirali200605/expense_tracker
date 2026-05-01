@@ -88,6 +88,7 @@ router.get('/dashboard/stats', auth, async (req, res) => {
         const expenses = await Expense.find({ user: req.user.userId });
         
         const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+        const averageExpense = expenses.length > 0 ? totalExpenses / expenses.length : 0;
         
         const categoryTotals = expenses.reduce((acc, expense) => {
             acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
@@ -103,6 +104,7 @@ router.get('/dashboard/stats', auth, async (req, res) => {
         
         res.json({
             totalExpenses,
+            averageExpense,
             categoryTotals,
             monthlyData,
             totalCount: expenses.length

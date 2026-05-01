@@ -40,7 +40,7 @@ const AddExpense = () => {
                 amount: parseFloat(formData.amount)
             };
 
-            await axios.post('http://localhost:5000/api/expenses', expenseData);
+            await api.post('/api/expenses', expenseData);
             
             setSuccess('Expense added successfully!');
             

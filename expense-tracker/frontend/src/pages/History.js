@@ -26,7 +26,7 @@ const History = () => {
 
     const fetchExpenses = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/expenses');
+            const response = await api.get('/api/expenses');
             setExpenses(response.data);
         } catch (err) {
             setError('Failed to fetch expenses');
@@ -73,7 +73,7 @@ const History = () => {
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this expense?')) {
             try {
-                await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+                await api.delete(`/api/expenses/${id}`);
                 fetchExpenses(); // Refresh the list
             } catch (err) {
                 setError('Failed to delete expense');
@@ -82,9 +82,9 @@ const History = () => {
     };
 
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'INR'
         }).format(amount);
     };
 

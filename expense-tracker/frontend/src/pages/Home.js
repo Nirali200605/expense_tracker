@@ -16,11 +16,11 @@ const Home = () => {
     const fetchData = async () => {
         try {
             // Fetch dashboard stats
-            const statsResponse = await axios.get('http://localhost:5000/api/expenses/dashboard/stats');
+            const statsResponse = await api.get('/api/expenses/dashboard/stats');
             setStats(statsResponse.data);
 
             // Fetch recent expenses
-            const expensesResponse = await axios.get('http://localhost:5000/api/expenses');
+            const expensesResponse = await api.get('/api/expenses');
             setRecentExpenses(expensesResponse.data.slice(0, 5));
         } catch (err) {
             setError('Failed to fetch data');
@@ -30,9 +30,9 @@ const Home = () => {
     };
 
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'INR'
         }).format(amount);
     };
 

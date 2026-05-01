@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 
 // Load environment variables
@@ -41,6 +42,16 @@ app.get('/', (req, res) => {
                 dashboard: 'GET /api/expenses/dashboard/stats'
             }
         }
+    });
+});
+
+// Lightweight health endpoint for backend + DB status checks
+app.get('/api/health', (req, res) => {
+    const isDbConnected = mongoose.connection.readyState === 1;
+
+    res.status(isDbConnected ? 200 : 503).json({
+        status: isDbConnected ? 'ok' : 'degraded',
+        database: isDbConnected ? 'connected' : 'disconnected'
     });
 });
 
